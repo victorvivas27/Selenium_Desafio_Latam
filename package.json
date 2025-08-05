@@ -1,0 +1,21 @@
+{
+  "name": "selenium",
+  "version": "1.0.0",
+  "description": "practica Selenium",
+  "main": "index.js",
+    "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "wdio": "wdio run ./wdio.conf.js"
+  },
+  "author": "Victor Javier Vivas",
+  "license": "ISC",
+  "dependencies": {
+    "@wdio/cli": "^9.18.4"
+  },
+  "devDependencies": {
+    "@wdio/local-runner": "^9.18.4",
+    "@wdio/mocha-framework": "^9.18.0",
+    "@wdio/spec-reporter": "^9.18.0"
+  }
+}
