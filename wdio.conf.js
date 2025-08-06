@@ -5,7 +5,15 @@ export const config = {
     ],
     maxInstances: 10,
     capabilities: [{
-        browserName: 'chrome'
+        browserName: 'chrome',
+        'goog:chromeOptions': {
+            args: [
+                //'--headless=new', // ← ¡comentado o eliminado!
+                // 👇 Clave para evitar que sitios detecten HeadlessChrome
+                '--window-size=1080,800',
+                '--user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115 Safari/537.36'
+            ]
+        }
     }],
     logLevel: 'info',
     bail: 0,
