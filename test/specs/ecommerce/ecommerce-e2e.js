@@ -1,72 +1,69 @@
+import { browser } from "../../../node_modules/@wdio/globals/build/index"
 import { ecommerceLogin, ecommerceRegistro } from "../../data/ecommerce-data/ecommerce-data"
+import ecommerceLoginPage from "../../page/ecommerce-page/ecommerce-login-page"
+import ecommerceRegistroPage from "../../page/ecommerce-page/ecommerce-registro-page"
 import { ecommerceSelectores } from "../../selectores/ecommerce-selectores/ecommerce-selectores"
 
 describe('Visitando la pagina de Ecommerce', () => {
     beforeEach(async () => {
-        await browser.url('https://ecommerce-js-test.vercel.app/')
+        await ecommerceRegistroPage.open()
     })
     it('Deveria logiarme con exito y mostrar mensaje de bienvenida', async () => {
 
-        await $(ecommerceSelectores.btnLogin).click()
-        await $(ecommerceSelectores.inputEmail).setValue(ecommerceLogin.email)
-        await $(ecommerceSelectores.inputPassword).setValue(ecommerceLogin.password)
-        await $(ecommerceSelectores.btnSubmit).click()
-        //await $(ecommerceSelectores.mensajeBienvenida).waitForDisplayed({ timeout: 5000 }) // ✅ espera segura
-        const mensaje = await $(ecommerceSelectores.mensajeBienvenida)
+        await ecommerceLoginPage.login(
+            ecommerceLogin.email,
+            ecommerceLogin.password
+        );
+        const mensaje = await ecommerceRegistroPage.mensajeBienvenida;
         const texto = await mensaje.getText()
         expect(texto).toBe(`Hello, ${ecommerceLogin.nombre}`)
-        await $(ecommerceSelectores.btnLogout).click()
-
-
+        await browser.pause(2000)
+        await ecommerceLoginPage.btnLogout.click()
     })
 
     it('Login con credenciales invalidas deberia mostrar mensaje de error', async () => {
-        await $(ecommerceSelectores.btnLogin).click()
-        await $(ecommerceSelectores.inputEmail).setValue(ecommerceLogin.emailInvalido)
-        await $(ecommerceSelectores.inputPassword).setValue(ecommerceLogin.passwordInvalido)
-        await $(ecommerceSelectores.btnSubmit).click()
-        const mensajeError = await $(ecommerceSelectores.mensajeError)
-        expect(mensajeError).toHaveText(ecommerceLogin.mensajeError)
+        await ecommerceLoginPage.login(
+            ecommerceLogin.emailInvalido,
+            ecommerceLogin.passwordInvalido
+        );
+        const mensajeError = await ecommerceLoginPage.mensajeError;
+        expect(mensajeError).toHaveText(ecommerceLogin.mensajeError);
+        await browser.pause(2000)
 
     })
 
     it('Deberia registrarme con exito y mostrar mensaje de bienvenida', async () => {
-
-        await $(ecommerceSelectores.btnRegister).click()
-        await $(ecommerceSelectores.inputName).setValue(ecommerceRegistro.fullName)
-        await $(ecommerceSelectores.inputEmail).setValue(ecommerceRegistro.email)
-        await $(ecommerceSelectores.inputPassword).setValue(ecommerceRegistro.password)
-        await $(ecommerceSelectores.inputConfirmPassword).setValue(ecommerceRegistro.confirmPassword)
-        await $(ecommerceSelectores.btnSubmit).click()
-        //await $(ecommerceSelectores.mensajeBienvenida).waitForDisplayed({ timeout: 5000 }) 
-        const mensaje = await $(ecommerceSelectores.mensajeBienvenida)
-        expect(mensaje).toHaveText(`Hello, ${ecommerceRegistro.fullName}`)
-        await $(ecommerceSelectores.btnLogout).click()
+        await ecommerceRegistroPage.registro(
+            ecommerceRegistro.fullName,
+            ecommerceRegistro.email,
+            ecommerceRegistro.password,
+            ecommerceRegistro.confirmPassword
+        );
+        const mensaje = await ecommerceRegistroPage.mensajeBienvenida;
+        const texto = await mensaje.getText()
+        expect(texto).toBe(`Hello, ${ecommerceRegistro.fullName}`)
+        await browser.pause(2000)
+        await ecommerceRegistroPage.btnLogout.click()
 
     })
 
     it('Registro con credenciales invalidas deberia mostrar mensaje de error', async () => {
-        await $(ecommerceSelectores.btnRegister).click()
-        await $(ecommerceSelectores.inputName).setValue(ecommerceRegistro.fullName)
-        await $(ecommerceSelectores.inputEmail).setValue(ecommerceLogin.email)
-        await $(ecommerceSelectores.inputPassword).setValue(ecommerceRegistro.password)
-        await $(ecommerceSelectores.inputConfirmPassword).setValue(ecommerceRegistro.confirmPassword)
-        await $(ecommerceSelectores.btnSubmit).click()
-        //await $(ecommerceSelectores.mensajeBienvenida).waitForDisplayed({ timeout: 5000 }) 
-        const mensaje = await $(ecommerceSelectores.mensajeError)
+        await ecommerceRegistroPage.registro(
+            ecommerceRegistro.fullName,
+            ecommerceLogin.email,
+            ecommerceRegistro.password,
+            ecommerceRegistro.confirmPassword
+        );
+        const mensaje = await ecommerceRegistroPage.mensajeError;
         expect(mensaje).toHaveText(ecommerceRegistro.emailDuplicado)
+        await browser.pause(2000)
 
     })
 
     it('Registro con campos vacios deberia permanecer en la misma pagina', async () => {
-        await $(ecommerceSelectores.btnRegister).click()
-        await $(ecommerceSelectores.inputName).setValue('')
-        await $(ecommerceSelectores.inputEmail).setValue('')
-        await $(ecommerceSelectores.inputPassword).setValue('')
-        await $(ecommerceSelectores.inputConfirmPassword).setValue('')
-        await $(ecommerceSelectores.btnSubmit).click()
+        await ecommerceRegistroPage.registro('', '', '', '');
         await expect(browser).toHaveUrl(/\/register$/);
-
+        await browser.pause(2000)
     })
 
 
