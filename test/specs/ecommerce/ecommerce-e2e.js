@@ -13,7 +13,8 @@ describe('Visitando la pagina de Ecommerce', () => {
         await $(ecommerceSelectores.btnSubmit).click()
         //await $(ecommerceSelectores.mensajeBienvenida).waitForDisplayed({ timeout: 5000 }) // ✅ espera segura
         const mensaje = await $(ecommerceSelectores.mensajeBienvenida)
-        expect(mensaje).toHaveText(`Hello, ${ecommerceLogin.nombre}`)
+        const texto = await mensaje.getText()
+        expect(texto).toBe(`Hello, ${ecommerceLogin.nombre}`)
         await $(ecommerceSelectores.btnLogout).click()
 
 

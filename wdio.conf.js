@@ -1,11 +1,7 @@
-
 export const config = {
     runner: 'local',
     specs: [
         './test/specs/**/*.js'
-    ],
-    exclude: [
-        // 'path/to/excluded/files'
     ],
     maxInstances: 10,
     capabilities: [{
@@ -17,60 +13,21 @@ export const config = {
     connectionRetryTimeout: 120000,
     connectionRetryCount: 3,
     framework: 'mocha',
-    reporters: ['spec'],
+    reporters: [
+        'spec',
+        ['allure', {
+            outputDir: 'allure-results',
+            disableWebdriverStepsReporting: false,
+            disableWebdriverScreenshotsReporting: false,
+        }]
+    ],
     mochaOpts: {
         ui: 'bdd',
         timeout: 60000
     },
-
-
-    // onPrepare: function (config, capabilities) {
-    // },
-
-    // onWorkerEnd: function (cid, exitCode, specs, retries) {
-    // },
-
-    // beforeSession: function (config, capabilities, specs, cid) {
-    // },
-
-    // before: function (capabilities, specs) {
-    // },
-
-    // beforeCommand: function (commandName, args) {
-    // },
-
-    // beforeSuite: function (suite) {
-    // },
-
-    // beforeTest: function (test, context) {
-    // },
-
-    // beforeHook: function (test, context, hookName) {
-    // },
-
-    // afterHook: function (test, context, { error, result, duration, passed, retries }, hookName) {
-    // },
-
-    // afterTest: function(test, context, { error, result, duration, passed, retries }) {
-    // },
-
-
-
-    // afterSuite: function (suite) {
-    // },
-
-    // afterCommand: function (commandName, args, result, error) {
-    // },
-
-    // after: function (result, capabilities, specs) {
-    // },
-
-    // afterSession: function (config, capabilities, specs) {
-    // },
-
-    // onComplete: function(exitCode, config, capabilities, results) {
-    // },
-
-    // afterAssertion: function(params) {
-    // }
-}   
+    afterTest: async function (test, context, { error, passed }) {
+        if (!passed) {
+            await browser.takeScreenshot();
+        }
+    }
+}
