@@ -1,0 +1,12 @@
+{
+    "validLogin": {
+        "username": "tomsmith",
+        "password": "SuperSecretPassword!",
+        "message": "You logged into a secure area!"
+    },
+    "invalidLogin": {
+        "username": "invalidUser",
+        "password": "invalidPassword",
+        "message": "Your username is invalid!"
+    }
+}

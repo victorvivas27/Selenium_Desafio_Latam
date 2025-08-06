@@ -7,7 +7,12 @@
             "@/*": [
                 "./*"
             ]
-        }
+        },
+        "types": [
+            "node",
+            "@wdio/globals",
+            "expect-webdriverio"
+        ]
     },
     "exclude": [
         "node_modules"
