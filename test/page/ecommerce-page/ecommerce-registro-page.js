@@ -1,6 +1,4 @@
-
 import { ecommerceSelectores } from "../../selectores/ecommerce-selectores/ecommerce-selectores";
-
 import EcommercePageBase from "./ecommerce-page-base";
 
 

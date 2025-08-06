@@ -1,8 +1,8 @@
 import { ecommerceSelectores } from "../../selectores/ecommerce-selectores/ecommerce-selectores";
 import EcommercePageBase from "./ecommerce-page-base";
 
-class ecommerceLoginPage extends EcommercePageBase{
-    
+class ecommerceLoginPage extends EcommercePageBase {
+
     get btnLogin() {
         return ($(ecommerceSelectores.btnLogin));
     }
@@ -17,7 +17,7 @@ class ecommerceLoginPage extends EcommercePageBase{
         await this.inputPassword.setValue(password);
         await this.btnSubmit.click();
     }
-  
+
 }
 
 export default new ecommerceLoginPage();

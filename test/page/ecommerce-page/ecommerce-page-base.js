@@ -1,7 +1,6 @@
-
 import { ecommerceSelectores } from '../../selectores/ecommerce-selectores/ecommerce-selectores.js';
 
-class EcommercePageBase{
+class EcommercePageBase {
     open() {
         return browser.url('https://ecommerce-js-test.vercel.app/')
     }

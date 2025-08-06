@@ -2,7 +2,6 @@ import { browser } from "../../../node_modules/@wdio/globals/build/index"
 import { ecommerceLogin, ecommerceRegistro } from "../../data/ecommerce-data/ecommerce-data"
 import ecommerceLoginPage from "../../page/ecommerce-page/ecommerce-login-page"
 import ecommerceRegistroPage from "../../page/ecommerce-page/ecommerce-registro-page"
-import { ecommerceSelectores } from "../../selectores/ecommerce-selectores/ecommerce-selectores"
 
 describe('Visitando la pagina de Ecommerce', () => {
     beforeEach(async () => {
